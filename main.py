@@ -15,6 +15,7 @@ class KiwiWindow(QtWidgets.QWidget):
         self.btn_minimize.clicked.connect(self.btn_min_clicked)
         self.titlelayout.addWidget(self.btn_minimize)
         self.btn_minimize.setFixedSize(60,40)
+        #self.btn_minimize.setGeometry(100,0,0,0)
         #self.btn_maximize.setContentsMargins(0)
 
         self.btn_maximize = QPushButton("-")
@@ -33,13 +34,13 @@ class KiwiWindow(QtWidgets.QWidget):
         # Title bar off
         #self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
-        self.mainlayout = QVBoxLayout()
+        self.mainlayout = QGridLayout(self)
         self.setLayout(self.mainlayout)
 
         self.titlelayout = QHBoxLayout()
         # self.titlelayout.sizeHint().setWidth(135)
-        self.mainlayout.addLayout(self.titlelayout)
-
+        self.mainlayout.addLayout(self.titlelayout, 0,4000,1,1)
+        self.titlelayout.setAlignment(Qt.AlignTop)
 
         self.leftnavigation = QVBoxLayout(self)
         #self.leftnavigation.setContentsMargins(0, 0, 500, 0)
@@ -69,7 +70,7 @@ class KiwiWindow(QtWidgets.QWidget):
         self.leftnavigation.addWidget(buttonTwitter, 2)
         # self.setLayout(self.leftnavigation)
         # self.layout.addLayout(self.leftnavigation)
-        self.mainlayout.addLayout(self.leftnavigation)
+        self.mainlayout.addLayout(self.leftnavigation, 1,0,1,3)
 
         #self.nameLabel = QLabel(self)
         #self.nameLabel.setText('Link:')
