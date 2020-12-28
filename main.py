@@ -22,7 +22,6 @@ class KiwiWindow(QtWidgets.QWidget):
         buttonInstagram.setSizePolicy(sizePolicy3)
         buttonInstagram.setFixedSize(QSize(100, 100))
         buttonInstagram.setStyleSheet("background-color: white")
-        # buttonInstagram.setStyleSheet("background-image: ICON")
 
         buttonFacebook.setSizePolicy(sizePolicy3)
         buttonFacebook.setFixedSize(QSize(100, 100))
@@ -36,6 +35,23 @@ class KiwiWindow(QtWidgets.QWidget):
         self.leftnavigation.addWidget(buttonFacebook, 1)
         self.leftnavigation.addWidget(buttonTwitter, 2)
 
+
+        self.title = QLabel("DEDEEDEded")
+        self.title.setFixedHeight(35)
+        self.title.setFixedWidth(self.width())
+        self.title.setAlignment(Qt.AlignLeft)
+        self.titlelayout.addWidget(self.title, 3)
+        self.title.setStyleSheet("""
+                    background-color: #150485;
+                    color: white;
+                """)
+        self.title.setFixedWidth(self.width())
+        #self.title.resize(self.width(), 35)
+        #self.title.setSizePolicy(QSizePolicy.Expanding, 35)
+        self.title.setMouseTracking(True)
+        self.title.mousePressEvent = self.mouseTitlePressEvent
+        self.title.mouseMoveEvent = self.mouseTitleMoveEvent
+        self.title.setFixedWidth(self.width())
 
         #Minimize Button - Top Right
         self.btn_minimize = QPushButton("+")
@@ -55,7 +71,6 @@ class KiwiWindow(QtWidgets.QWidget):
         self.titlelayout.addWidget(self.btn_close)
         self.btn_close.setFixedSize(60,40)
 
-
         self.show()
 
     def init_ui(self):
@@ -69,7 +84,9 @@ class KiwiWindow(QtWidgets.QWidget):
 
         #Title Layout
         self.titlelayout = QHBoxLayout()
-        self.mainlayout.addLayout(self.titlelayout, 0, 2, 0, 1)
+        #self.mainlayout.addLayout(self.titlelayout, 0, 0, 1, 1)
+        self.mainlayout.addLayout(self.titlelayout, 0,0,0,0)
+        self.titlelayout.setContentsMargins(0,0,0,0)
         self.titlelayout.setAlignment(Qt.AlignTop)
         self.titlelayout.setSpacing(0)
 
@@ -78,10 +95,20 @@ class KiwiWindow(QtWidgets.QWidget):
         self.leftnavigation = QVBoxLayout(self)
         self.mainlayout.addLayout(self.leftnavigation, 1,0,1,3)
 
-    def resizeEvent(self, QResizeEvent):
-        super(self.titlelayout, self).resizeEvent(QResizeEvent)
-        self.titlelayout.setFixedWidth(self.parent.width())
 
+
+
+    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+        self.title.setFixedWidth(self.width()-180)
+
+    def mouseTitlePressEvent(self, event):  # +
+        self.dragPos = event.globalPos()
+
+    def mouseTitleMoveEvent(self, event):  # !!!
+        if event.buttons() == QtCore.Qt.LeftButton:
+             self.move(self.pos() + event.globalPos() - self.dragPos)
+             self.dragPos = event.globalPos()
+             event.accept()
 
     def btn_close_clicked(self):
         self.close()
@@ -93,9 +120,10 @@ class KiwiWindow(QtWidgets.QWidget):
         self.showMinimized()
 
 
+
 app = QtWidgets.QApplication(sys.argv)
 pencere = KiwiWindow()
 pencere.setWindowTitle("Kiwi App")
 #pencere.setMaximumSize(1280,720)
-#pencere.setFixedSize(1,720)
+#pencere.setFixedSize(1280, 720)
 sys.exit(app.exec_())
