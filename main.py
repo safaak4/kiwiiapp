@@ -38,7 +38,6 @@ class KiwiWindow(QtWidgets.QWidget):
 
         self.title = QLabel("DEDEEDEded")
         self.title.setFixedHeight(35)
-        self.title.setFixedWidth(self.width())
         self.title.setAlignment(Qt.AlignLeft)
         self.titlelayout.addWidget(self.title, 3)
         self.title.setStyleSheet("""
@@ -71,11 +70,16 @@ class KiwiWindow(QtWidgets.QWidget):
         self.titlelayout.addWidget(self.btn_close)
         self.btn_close.setFixedSize(60,40)
 
+        window = QtWidgets.QWidget()
+        window.setGeometry(QtCore.QRect(300, 300, 640, 480))
+        sizegrip = QtWidgets.QSizeGrip(window)
+        self.mainlayout.addWidget(sizegrip, 2,0,1,1, Qt.AlignRight)
+
         self.show()
 
     def init_ui(self):
         # Title bar off
-        #self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
         #Main Layout
         self.mainlayout = QGridLayout(self)
@@ -84,8 +88,8 @@ class KiwiWindow(QtWidgets.QWidget):
 
         #Title Layout
         self.titlelayout = QHBoxLayout()
-        #self.mainlayout.addLayout(self.titlelayout, 0, 0, 1, 1)
-        self.mainlayout.addLayout(self.titlelayout, 0,0,0,0)
+        self.mainlayout.addLayout(self.titlelayout, 0, 0, 1, 1)
+        #self.mainlayout.addLayout(self.titlelayout, 0,0,0,0)
         self.titlelayout.setContentsMargins(0,0,0,0)
         self.titlelayout.setAlignment(Qt.AlignTop)
         self.titlelayout.setSpacing(0)
@@ -99,7 +103,8 @@ class KiwiWindow(QtWidgets.QWidget):
 
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        self.title.setFixedWidth(self.width()-180)
+        #self.title.setFixedWidth(self.width()-180)
+        self.title.setMaximumWidth(self.width()-180)
 
     def mouseTitlePressEvent(self, event):  # +
         self.dragPos = event.globalPos()
