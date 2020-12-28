@@ -35,14 +35,18 @@ class KiwiWindow(QtWidgets.QWidget):
         self.leftnavigation.addWidget(buttonFacebook, 1)
         self.leftnavigation.addWidget(buttonTwitter, 2)
 
-
-        self.title = QLabel("DEDEEDEded")
+        self.myFont = QtGui.QFont("Uni Sans", 12)
+        self.myFont.setItalic(True)
+        self.title = QLabel("Kiwii App nnn")
+        self.title.setFont(self.myFont)
         self.title.setFixedHeight(35)
         self.title.setAlignment(Qt.AlignLeft)
-        self.titlelayout.addWidget(self.title, 3)
+        self.titlelayout.addWidget(self.title, 3,0,0,0)
         self.title.setStyleSheet("""
                     background-color: #150485;
                     color: white;
+                    padding-top: 5px;
+                    padding-left: 5px;
                 """)
         self.title.setFixedWidth(self.width())
         #self.title.resize(self.width(), 35)
@@ -50,30 +54,33 @@ class KiwiWindow(QtWidgets.QWidget):
         self.title.setMouseTracking(True)
         self.title.mousePressEvent = self.mouseTitlePressEvent
         self.title.mouseMoveEvent = self.mouseTitleMoveEvent
-        self.title.setFixedWidth(self.width())
 
         #Minimize Button - Top Right
         self.btn_minimize = QPushButton("+")
         self.btn_minimize.clicked.connect(self.btn_min_clicked)
-        self.titlelayout.addWidget(self.btn_minimize)
-        self.btn_minimize.setFixedSize(60,40)
+        self.functionslayout.addWidget(self.btn_minimize)
+        self.btn_minimize.setFixedSize(60,35)
+        self.btn_minimize.setFlat(True)
 
         #Maximize Button - Top Right
         self.btn_maximize = QPushButton("-")
         self.btn_maximize.clicked.connect(self.btn_max_clicked)
-        self.titlelayout.addWidget(self.btn_maximize)
-        self.btn_maximize.setFixedSize(60,40)
+        self.functionslayout.addWidget(self.btn_maximize)
+        self.btn_maximize.setFixedSize(60,35)
+        self.btn_maximize.setFlat(True)
 
         #Close Button - Top Right
         self.btn_close = QPushButton("x")
         self.btn_close.clicked.connect(self.btn_close_clicked)
-        self.titlelayout.addWidget(self.btn_close)
-        self.btn_close.setFixedSize(60,40)
+        self.functionslayout.addWidget(self.btn_close)
+        self.btn_close.setFixedSize(60,35)
+        self.btn_close.setFlat(True)
+
 
         window = QtWidgets.QWidget()
         window.setGeometry(QtCore.QRect(300, 300, 640, 480))
         sizegrip = QtWidgets.QSizeGrip(window)
-        self.mainlayout.addWidget(sizegrip, 2,0,1,1, Qt.AlignRight)
+        self.mainlayout.addWidget(sizegrip, 2,0,1,0, Qt.AlignRight | Qt.AlignBottom)
 
         self.show()
 
@@ -82,29 +89,31 @@ class KiwiWindow(QtWidgets.QWidget):
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
         #Main Layout
-        self.mainlayout = QGridLayout(self)
+        self.mainlayout = QGridLayout()
         self.setLayout(self.mainlayout)
         self.mainlayout.setContentsMargins(0,0,0,0)
 
         #Title Layout
-        self.titlelayout = QHBoxLayout()
-        self.mainlayout.addLayout(self.titlelayout, 0, 0, 1, 1)
-        #self.mainlayout.addLayout(self.titlelayout, 0,0,0,0)
+        self.titlelayout = QGridLayout()
+        #self.mainlayout.addLayout(self.titlelayout, 0, 0, 1, 1)
+        self.mainlayout.addLayout(self.titlelayout, 0,0,3,0)
         self.titlelayout.setContentsMargins(0,0,0,0)
-        self.titlelayout.setAlignment(Qt.AlignTop)
-        self.titlelayout.setSpacing(0)
+        self.titlelayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
 
+        #Functions Layout
+        self.functionslayout = QHBoxLayout()
+        self.titlelayout.addLayout(self.functionslayout,1,0,0,0)
+        self.functionslayout.setAlignment(Qt.AlignRight)
+        self.functionslayout.setSpacing(0)
 
         #Left Navigation Layout
         self.leftnavigation = QVBoxLayout(self)
         self.mainlayout.addLayout(self.leftnavigation, 1,0,1,3)
 
-
-
-
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         #self.title.setFixedWidth(self.width()-180)
-        self.title.setMaximumWidth(self.width()-180)
+        self.title.setFixedWidth(self.width())
+
 
     def mouseTitlePressEvent(self, event):  # +
         self.dragPos = event.globalPos()
@@ -129,6 +138,8 @@ class KiwiWindow(QtWidgets.QWidget):
 app = QtWidgets.QApplication(sys.argv)
 pencere = KiwiWindow()
 pencere.setWindowTitle("Kiwi App")
+pencere.setStyleSheet("background-color: #080136")
 #pencere.setMaximumSize(1280,720)
+pencere.setMinimumSize(1280,720)
 #pencere.setFixedSize(1280, 720)
 sys.exit(app.exec_())
