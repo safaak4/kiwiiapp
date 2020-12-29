@@ -11,77 +11,6 @@ class KiwiWindow(QtWidgets.QWidget):
         super().__init__()
         self.init_ui()
 
-        # Left Navigation Bar
-        buttonInstagram = QPushButton("Instagram")
-        buttonFacebook = QPushButton("Facebook")
-        buttonTwitter = QPushButton("Twitter")
-
-        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy3.setHeightForWidth(buttonInstagram.sizePolicy().hasHeightForWidth())
-
-        buttonInstagram.setSizePolicy(sizePolicy3)
-        buttonInstagram.setFixedSize(QSize(100, 100))
-        buttonInstagram.setStyleSheet("background-color: white")
-
-        buttonFacebook.setSizePolicy(sizePolicy3)
-        buttonFacebook.setFixedSize(QSize(100, 100))
-        buttonFacebook.setStyleSheet("background-color: white")
-
-        buttonTwitter.setSizePolicy(sizePolicy3)
-        buttonTwitter.setFixedSize(QSize(100, 100))
-        buttonTwitter.setStyleSheet("background-color: white")
-
-        self.leftnavigation.addWidget(buttonInstagram, 0)
-        self.leftnavigation.addWidget(buttonFacebook, 1)
-        self.leftnavigation.addWidget(buttonTwitter, 2)
-
-        self.myFont = QtGui.QFont("Uni Sans", 12)
-        self.myFont.setItalic(True)
-        self.title = QLabel("Kiwii App nnn")
-        self.title.setFont(self.myFont)
-        self.title.setFixedHeight(35)
-        self.title.setAlignment(Qt.AlignLeft)
-        self.titlelayout.addWidget(self.title, 3,0,0,0)
-        self.title.setStyleSheet("""
-                    background-color: #150485;
-                    color: white;
-                    padding-top: 5px;
-                    padding-left: 5px;
-                """)
-        self.title.setFixedWidth(self.width())
-        #self.title.resize(self.width(), 35)
-        #self.title.setSizePolicy(QSizePolicy.Expanding, 35)
-        self.title.setMouseTracking(True)
-        self.title.mousePressEvent = self.mouseTitlePressEvent
-        self.title.mouseMoveEvent = self.mouseTitleMoveEvent
-
-        #Minimize Button - Top Right
-        self.btn_minimize = QPushButton("+")
-        self.btn_minimize.clicked.connect(self.btn_min_clicked)
-        self.functionslayout.addWidget(self.btn_minimize)
-        self.btn_minimize.setFixedSize(60,35)
-        self.btn_minimize.setFlat(True)
-
-        #Maximize Button - Top Right
-        self.btn_maximize = QPushButton("-")
-        self.btn_maximize.clicked.connect(self.btn_max_clicked)
-        self.functionslayout.addWidget(self.btn_maximize)
-        self.btn_maximize.setFixedSize(60,35)
-        self.btn_maximize.setFlat(True)
-
-        #Close Button - Top Right
-        self.btn_close = QPushButton("x")
-        self.btn_close.clicked.connect(self.btn_close_clicked)
-        self.functionslayout.addWidget(self.btn_close)
-        self.btn_close.setFixedSize(60,35)
-        self.btn_close.setFlat(True)
-
-
-        window = QtWidgets.QWidget()
-        window.setGeometry(QtCore.QRect(300, 300, 640, 480))
-        sizegrip = QtWidgets.QSizeGrip(window)
-        self.mainlayout.addWidget(sizegrip, 2,0,1,0, Qt.AlignRight | Qt.AlignBottom)
-
         self.show()
 
     def init_ui(self):
@@ -96,9 +25,10 @@ class KiwiWindow(QtWidgets.QWidget):
         #Title Layout
         self.titlelayout = QGridLayout()
         #self.mainlayout.addLayout(self.titlelayout, 0, 0, 1, 1)
-        self.mainlayout.addLayout(self.titlelayout, 0,0,3,0)
+        self.mainlayout.addLayout(self.titlelayout, 0,0,0,0)
         self.titlelayout.setContentsMargins(0,0,0,0)
         self.titlelayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+        self.titlelayout.sizeHint().setHeight(35)
 
         #Functions Layout
         self.functionslayout = QHBoxLayout()
@@ -107,8 +37,97 @@ class KiwiWindow(QtWidgets.QWidget):
         self.functionslayout.setSpacing(0)
 
         #Left Navigation Layout
-        self.leftnavigation = QVBoxLayout(self)
-        self.mainlayout.addLayout(self.leftnavigation, 1,0,1,3)
+        self.topnavigation = QHBoxLayout(self)
+        self.mainlayout.addLayout(self.topnavigation, 0,0,0,0, Qt.AlignTop)
+        self.topnavigation.layout().setContentsMargins(0,40,0,0)
+
+        #Left Navigation Bar
+        buttonInstagram = QPushButton("Instagram")
+        buttonFacebook = QPushButton("Facebook")
+        buttonTwitter = QPushButton("Twitter")
+
+        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy3.setHeightForWidth(buttonInstagram.sizePolicy().hasHeightForWidth())
+
+        self.buttonFont = QtGui.QFont("Uni Sans", 13)
+        self.buttonFont.setItalic(True)
+        buttonInstagram.setSizePolicy(sizePolicy3)
+        buttonInstagram.setFixedSize(QSize(150, 90))
+        buttonInstagram.setStyleSheet("background-color: white")
+        buttonInstagram.setFont(self.buttonFont)
+
+        buttonFacebook.setSizePolicy(sizePolicy3)
+        buttonFacebook.setFixedSize(QSize(150, 90))
+        buttonFacebook.setStyleSheet("background-color: white")
+        buttonFacebook.setFont(self.buttonFont)
+
+        buttonTwitter.setSizePolicy(sizePolicy3)
+        buttonTwitter.setFixedSize(QSize(150, 90))
+        buttonTwitter.setStyleSheet(
+        "QPushButton::!hover"
+        "{"
+        "color: #acb4b5;"
+        "}"
+        "QPushButton::hover"
+        "{"
+        "color: white;"
+        "border-bottom-width: 1px;"
+        "border-radius: 0px;"
+        "text-decoration: underline;"
+        "}"
+        )
+        buttonTwitter.setFont(self.buttonFont)
+        buttonTwitter.setFlat(True)
+
+        self.topnavigation.addWidget(buttonInstagram, 0)
+        self.topnavigation.addWidget(buttonFacebook, 1)
+        self.topnavigation.addWidget(buttonTwitter, 2)
+
+        self.myFont = QtGui.QFont("Uni Sans", 12)
+        self.myFont.setItalic(True)
+        self.title = QLabel("Kiwii App nnn")
+        self.title.setFont(self.myFont)
+        self.title.setFixedHeight(35)
+        self.title.setAlignment(Qt.AlignLeft)
+        self.titlelayout.addWidget(self.title, 3, 0, 0, 0)
+        self.title.setStyleSheet("""
+                            background-color: #150485;
+                            color: white;
+                            padding-top: 5px;
+                            padding-left: 5px;
+                        """)
+        self.title.setFixedWidth(self.width())
+        # self.title.resize(self.width(), 35)
+        # self.title.setSizePolicy(QSizePolicy.Expanding, 35)
+        self.title.setMouseTracking(True)
+        self.title.mousePressEvent = self.mouseTitlePressEvent
+        self.title.mouseMoveEvent = self.mouseTitleMoveEvent
+
+        # Minimize Button - Top Right
+        self.btn_minimize = QPushButton("+")
+        self.btn_minimize.clicked.connect(self.btn_min_clicked)
+        self.functionslayout.addWidget(self.btn_minimize)
+        self.btn_minimize.setFixedSize(60, 35)
+        self.btn_minimize.setFlat(True)
+
+        # Maximize Button - Top Right
+        self.btn_maximize = QPushButton("-")
+        self.btn_maximize.clicked.connect(self.btn_max_clicked)
+        self.functionslayout.addWidget(self.btn_maximize)
+        self.btn_maximize.setFixedSize(60, 35)
+        self.btn_maximize.setFlat(True)
+
+        # Close Button - Top Right
+        self.btn_close = QPushButton("x")
+        self.btn_close.clicked.connect(self.btn_close_clicked)
+        self.functionslayout.addWidget(self.btn_close)
+        self.btn_close.setFixedSize(60, 35)
+        self.btn_close.setFlat(True)
+
+        window = QtWidgets.QWidget()
+        window.setGeometry(QtCore.QRect(300, 300, 640, 480))
+        sizegrip = QtWidgets.QSizeGrip(window)
+        self.mainlayout.addWidget(sizegrip, 2, 0, 1, 0, Qt.AlignRight | Qt.AlignBottom)
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         #self.title.setFixedWidth(self.width()-180)
