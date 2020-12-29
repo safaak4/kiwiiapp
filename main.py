@@ -53,13 +53,35 @@ class KiwiWindow(QtWidgets.QWidget):
         self.buttonFont.setItalic(True)
         buttonInstagram.setSizePolicy(sizePolicy3)
         buttonInstagram.setFixedSize(QSize(150, 90))
-        buttonInstagram.setStyleSheet("background-color: white")
+        buttonInstagram.setStyleSheet("QPushButton::!hover"
+        "{"
+        "color: #acb4b5;"
+        "}"
+        "QPushButton::hover"
+        "{"
+        "color: white;"
+        "border-bottom-width: 1px;"
+        "border-radius: 0px;"
+        "text-decoration: underline;"
+        "}")
         buttonInstagram.setFont(self.buttonFont)
+        buttonInstagram.setFlat(True)
 
         buttonFacebook.setSizePolicy(sizePolicy3)
         buttonFacebook.setFixedSize(QSize(150, 90))
-        buttonFacebook.setStyleSheet("background-color: white")
+        buttonFacebook.setStyleSheet("QPushButton::!hover"
+        "{"
+        "color: #acb4b5;"
+        "}"
+        "QPushButton::hover"
+        "{"
+        "color: white;"
+        "border-bottom-width: 1px;"
+        "border-radius: 0px;"
+        "text-decoration: underline;"
+        "}")
         buttonFacebook.setFont(self.buttonFont)
+        buttonFacebook.setFlat(True)
 
         buttonTwitter.setSizePolicy(sizePolicy3)
         buttonTwitter.setFixedSize(QSize(150, 90))
