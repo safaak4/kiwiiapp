@@ -139,7 +139,7 @@ class KiwiWindow(QtWidgets.QWidget):
         self.functionslayout.addWidget(self.btn_minimize)
         self.btn_minimize.setFixedSize(60, 35)
         self.btn_minimize.setFlat(True)
-        self.btn_minimize.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "minimizepng.png"))
+        self.btn_minimize.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "icons/minimizepng.png"))
         self.btn_minimize.setIconSize(QSize(14,14))
 
         # Maximize Button - Top Right
@@ -148,7 +148,7 @@ class KiwiWindow(QtWidgets.QWidget):
         self.functionslayout.addWidget(self.btn_maximize)
         self.btn_maximize.setFixedSize(60, 35)
         self.btn_maximize.setFlat(True)
-        self.btn_maximize.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "squarepng.png"))
+        self.btn_maximize.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "icons/squarepng.png"))
         self.btn_maximize.setIconSize(QSize(14, 14))
 
         # Close Button - Top Right
@@ -157,7 +157,7 @@ class KiwiWindow(QtWidgets.QWidget):
         self.functionslayout.addWidget(self.btn_close)
         self.btn_close.setFixedSize(60, 35)
         self.btn_close.setFlat(True)
-        self.btn_close.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "closepng.png"))
+        self.btn_close.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "icons/closepng.png"))
         self.btn_close.setIconSize(QSize(14, 14))
 
 
