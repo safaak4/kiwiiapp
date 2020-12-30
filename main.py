@@ -344,7 +344,11 @@ class KiwiWindow(QtWidgets.QWidget):
                                           "text-decoration: underline;"
                                           "}")
         #self.webPageChange(2)
-        print(self.webWebWiew.page().runJavaScript("document.getElementsByClassName('_2hvTZ pexuQ zyHYP').value"))
+        self.webWebWiew.page().runJavaScript("document.querySelector('#loginForm > div > div:nth-child(1) > div > label > input[name=username]');", self.denemee)
+         #   "console.log('denemee')")
+
+    def denemee(self, value):
+        print(str(value))
 
     def btn_close_clicked(self):
         self.close()
