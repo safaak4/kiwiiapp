@@ -1,3 +1,4 @@
+import os
 import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QMainWindow, QSizePolicy, QWidget, \
@@ -30,32 +31,32 @@ class KiwiWindow(QtWidgets.QWidget):
         self.titlelayout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         self.titlelayout.sizeHint().setHeight(35)
 
-        #Functions Layout
+        #Functions Layout (in Title Layout)
         self.functionslayout = QHBoxLayout()
         self.titlelayout.addLayout(self.functionslayout,1,0,0,0)
         self.functionslayout.setAlignment(Qt.AlignRight)
         self.functionslayout.setSpacing(0)
 
-        #Left Navigation Layout
+        #Top Navigation Layout
         self.topnavigation = QHBoxLayout(self)
         self.mainlayout.addLayout(self.topnavigation, 0,0,0,0, Qt.AlignTop)
         self.topnavigation.layout().setContentsMargins(0,40,0,0)
 
-        #Left Navigation Bar
-        buttonInstagram = QPushButton("Instagram")
-        buttonFacebook = QPushButton("Facebook")
-        buttonTwitter = QPushButton("Twitter")
+        #Top Navigation Bar
+        self.buttonInstagram = QPushButton("Instagram")
+        self.buttonFacebook = QPushButton("Facebook")
+        self.buttonTwitter = QPushButton("Twitter")
 
         sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy3.setHeightForWidth(buttonInstagram.sizePolicy().hasHeightForWidth())
+        sizePolicy3.setHeightForWidth(self.buttonInstagram.sizePolicy().hasHeightForWidth())
 
         self.buttonFont = QtGui.QFont("Uni Sans", 13)
         self.buttonFont.setItalic(True)
-        buttonInstagram.setSizePolicy(sizePolicy3)
-        buttonInstagram.setFixedSize(QSize(150, 90))
-        buttonInstagram.setStyleSheet("QPushButton::!hover"
+        self.buttonInstagram.setSizePolicy(sizePolicy3)
+        self.buttonInstagram.setFixedSize(QSize(150, 90))
+        self.buttonInstagram.setStyleSheet("QPushButton::!hover"
         "{"
-        "color: #acb4b5;"
+        "color: #cccccc;"
         "}"
         "QPushButton::hover"
         "{"
@@ -64,14 +65,15 @@ class KiwiWindow(QtWidgets.QWidget):
         "border-radius: 0px;"
         "text-decoration: underline;"
         "}")
-        buttonInstagram.setFont(self.buttonFont)
-        buttonInstagram.setFlat(True)
+        self.buttonInstagram.setFont(self.buttonFont)
+        self.buttonInstagram.setFlat(True)
+        self.buttonInstagram.clicked.connect(self.btn_instagram_clicked)
 
-        buttonFacebook.setSizePolicy(sizePolicy3)
-        buttonFacebook.setFixedSize(QSize(150, 90))
-        buttonFacebook.setStyleSheet("QPushButton::!hover"
+        self.buttonFacebook.setSizePolicy(sizePolicy3)
+        self.buttonFacebook.setFixedSize(QSize(150, 90))
+        self.buttonFacebook.setStyleSheet("QPushButton::!hover"
         "{"
-        "color: #acb4b5;"
+        "color: #cccccc;"
         "}"
         "QPushButton::hover"
         "{"
@@ -80,15 +82,16 @@ class KiwiWindow(QtWidgets.QWidget):
         "border-radius: 0px;"
         "text-decoration: underline;"
         "}")
-        buttonFacebook.setFont(self.buttonFont)
-        buttonFacebook.setFlat(True)
+        self.buttonFacebook.setFont(self.buttonFont)
+        self.buttonFacebook.setFlat(True)
+        self.buttonFacebook.clicked.connect(self.btn_facebook_clicked)
 
-        buttonTwitter.setSizePolicy(sizePolicy3)
-        buttonTwitter.setFixedSize(QSize(150, 90))
-        buttonTwitter.setStyleSheet(
+        self.buttonTwitter.setSizePolicy(sizePolicy3)
+        self.buttonTwitter.setFixedSize(QSize(150, 90))
+        self.buttonTwitter.setStyleSheet(
         "QPushButton::!hover"
         "{"
-        "color: #acb4b5;"
+        "color: #cccccc;"
         "}"
         "QPushButton::hover"
         "{"
@@ -98,13 +101,15 @@ class KiwiWindow(QtWidgets.QWidget):
         "text-decoration: underline;"
         "}"
         )
-        buttonTwitter.setFont(self.buttonFont)
-        buttonTwitter.setFlat(True)
+        self.buttonTwitter.setFont(self.buttonFont)
+        self.buttonTwitter.setFlat(True)
+        self.buttonTwitter.clicked.connect(self.btn_twitter_clicked)
 
-        self.topnavigation.addWidget(buttonInstagram, 0)
-        self.topnavigation.addWidget(buttonFacebook, 1)
-        self.topnavigation.addWidget(buttonTwitter, 2)
+        self.topnavigation.addWidget(self.buttonInstagram, 0)
+        self.topnavigation.addWidget(self.buttonFacebook, 1)
+        self.topnavigation.addWidget(self.buttonTwitter, 2)
 
+        #Title Bar
         self.myFont = QtGui.QFont("Uni Sans", 12)
         self.myFont.setItalic(True)
         self.title = QLabel("Kiwii App nnn")
@@ -125,26 +130,36 @@ class KiwiWindow(QtWidgets.QWidget):
         self.title.mousePressEvent = self.mouseTitlePressEvent
         self.title.mouseMoveEvent = self.mouseTitleMoveEvent
 
+        #Path File
+        scriptDir = os.path.dirname(os.path.realpath(__file__))
+
         # Minimize Button - Top Right
-        self.btn_minimize = QPushButton("+")
+        self.btn_minimize = QPushButton()
         self.btn_minimize.clicked.connect(self.btn_min_clicked)
         self.functionslayout.addWidget(self.btn_minimize)
         self.btn_minimize.setFixedSize(60, 35)
         self.btn_minimize.setFlat(True)
+        self.btn_minimize.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "minimizepng.png"))
+        self.btn_minimize.setIconSize(QSize(14,14))
 
         # Maximize Button - Top Right
-        self.btn_maximize = QPushButton("-")
+        self.btn_maximize = QPushButton()
         self.btn_maximize.clicked.connect(self.btn_max_clicked)
         self.functionslayout.addWidget(self.btn_maximize)
         self.btn_maximize.setFixedSize(60, 35)
         self.btn_maximize.setFlat(True)
+        self.btn_maximize.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "squarepng.png"))
+        self.btn_maximize.setIconSize(QSize(14, 14))
 
         # Close Button - Top Right
-        self.btn_close = QPushButton("x")
+        self.btn_close = QPushButton()
         self.btn_close.clicked.connect(self.btn_close_clicked)
         self.functionslayout.addWidget(self.btn_close)
         self.btn_close.setFixedSize(60, 35)
         self.btn_close.setFlat(True)
+        self.btn_close.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "closepng.png"))
+        self.btn_close.setIconSize(QSize(14, 14))
+
 
         window = QtWidgets.QWidget()
         window.setGeometry(QtCore.QRect(300, 300, 640, 480))
@@ -155,7 +170,6 @@ class KiwiWindow(QtWidgets.QWidget):
         #self.title.setFixedWidth(self.width()-180)
         self.title.setFixedWidth(self.width())
 
-
     def mouseTitlePressEvent(self, event):  # +
         self.dragPos = event.globalPos()
 
@@ -164,6 +178,112 @@ class KiwiWindow(QtWidgets.QWidget):
              self.move(self.pos() + event.globalPos() - self.dragPos)
              self.dragPos = event.globalPos()
              event.accept()
+
+    def btn_instagram_clicked(self):
+        self.buttonInstagram.setStyleSheet("QPushButton::!hover"
+                                           "{"
+                                           "color: #03c4a1;"
+                                           "}"
+                                           "QPushButton::hover"
+                                           "{"
+                                           "color: #13ebc3;"
+                                           "border-bottom-width: 1px;"
+                                           "border-radius: 0px;"
+                                           "text-decoration: underline;"
+                                           "}"
+                                           )
+        self.buttonFacebook.setStyleSheet("QPushButton::!hover"
+                                          "{"
+                                          "color: #cccccc;"
+                                          "}"
+                                          "QPushButton::hover"
+                                          "{"
+                                          "color: white;"
+                                          "border-bottom-width: 1px;"
+                                          "border-radius: 0px;"
+                                          "text-decoration: underline;"
+                                          "}")
+        self.buttonTwitter.setStyleSheet("QPushButton::!hover"
+                                          "{"
+                                          "color: #cccccc;"
+                                          "}"
+                                          "QPushButton::hover"
+                                          "{"
+                                          "color: white;"
+                                          "border-bottom-width: 1px;"
+                                          "border-radius: 0px;"
+                                          "text-decoration: underline;"
+                                          "}")
+
+    def btn_facebook_clicked(self):
+        self.buttonFacebook.setStyleSheet("QPushButton::!hover"
+                                           "{"
+                                           "color: #03c4a1;"
+                                           "}"
+                                           "QPushButton::hover"
+                                           "{"
+                                           "color: #13ebc3;"
+                                           "border-bottom-width: 1px;"
+                                           "border-radius: 0px;"
+                                           "text-decoration: underline;"
+                                           "}")
+        self.buttonTwitter.setStyleSheet("QPushButton::!hover"
+                                          "{"
+                                          "color: #cccccc;"
+                                          "}"
+                                          "QPushButton::hover"
+                                          "{"
+                                          "color: white;"
+                                          "border-bottom-width: 1px;"
+                                          "border-radius: 0px;"
+                                          "text-decoration: underline;"
+                                          "}")
+        self.buttonInstagram.setStyleSheet("QPushButton::!hover"
+                                           "{"
+                                           "color: #cccccc;"
+                                           "}"
+                                           "QPushButton::hover"
+                                           "{"
+                                           "color: white;"
+                                           "border-bottom-width: 1px;"
+                                           "border-radius: 0px;"
+                                           "text-decoration: underline;"
+                                           "}")
+
+    def btn_twitter_clicked(self):
+        self.buttonTwitter.setStyleSheet("QPushButton::!hover"
+                                           "{"
+                                           "color: #03c4a1;"
+                                           "}"
+                                           "QPushButton::hover"
+                                           "{"
+                                           "color: #13ebc3;"
+                                           "border-bottom-width: 1px;"
+                                           "border-radius: 0px;"
+                                           "text-decoration: underline;"
+                                           "}")
+        self.buttonFacebook.setStyleSheet("QPushButton::!hover"
+                                          "{"
+                                          "color: #cccccc;"
+                                          "}"
+                                          "QPushButton::hover"
+                                          "{"
+                                          "color: white;"
+                                          "border-bottom-width: 1px;"
+                                          "border-radius: 0px;"
+                                          "text-decoration: underline;"
+                                          "}")
+        self.buttonInstagram.setStyleSheet("QPushButton::!hover"
+                                          "{"
+                                          "color: #cccccc;"
+                                          "}"
+                                          "QPushButton::hover"
+                                          "{"
+                                          "color: white;"
+                                          "border-bottom-width: 1px;"
+                                          "border-radius: 0px;"
+                                          "text-decoration: underline;"
+                                          "}")
 
     def btn_close_clicked(self):
         self.close()
