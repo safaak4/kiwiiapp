@@ -1,9 +1,12 @@
 import os
 import sys
+import time
+
 from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QMainWindow, QSizePolicy, QWidget, \
     QGridLayout
-from PyQt5.QtCore import QSize, QPoint, Qt
+from PyQt5.QtCore import QSize, QPoint, Qt, QUrl
 from  PyQt5.QtGui import *
 
 
@@ -23,6 +26,16 @@ class KiwiWindow(QtWidgets.QWidget):
         self.setLayout(self.mainlayout)
         self.mainlayout.setContentsMargins(0,0,0,0)
 
+        #Lead Layout
+        self.leadlayout = QGridLayout()
+        self.mainlayout.addLayout(self.leadlayout, 0, 0, 0, 0)
+        self.leadlayout.layout().setContentsMargins(0, 130, 0, 0)
+
+        #WebView
+        self.webWebWiew = QWebEngineView()
+        self.leadlayout.addWidget(self.webWebWiew, 0, 0, 0, 1)
+        self.webWebWiew.close()
+
         #Title Layout
         self.titlelayout = QGridLayout()
         #self.mainlayout.addLayout(self.titlelayout, 0, 0, 1, 1)
@@ -38,7 +51,7 @@ class KiwiWindow(QtWidgets.QWidget):
         self.functionslayout.setSpacing(0)
 
         #Top Navigation Layout
-        self.topnavigation = QHBoxLayout(self)
+        self.topnavigation = QHBoxLayout()
         self.mainlayout.addLayout(self.topnavigation, 0,0,0,0, Qt.AlignTop)
         self.topnavigation.layout().setContentsMargins(0,40,0,0)
 
@@ -141,15 +154,31 @@ class KiwiWindow(QtWidgets.QWidget):
         self.btn_minimize.setFlat(True)
         self.btn_minimize.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "icons/minimizepng.png"))
         self.btn_minimize.setIconSize(QSize(14,14))
+        self.btn_minimize.setStyleSheet("QPushButton::hover"
+        "{"
+        "background-color: #0d0063;"
+        "border-bottom-width: 1px;"
+        "border-radius: 0px;"
+        "text-decoration: underline;"
+        "}")
 
         # Maximize Button - Top Right
         self.btn_maximize = QPushButton()
         self.btn_maximize.clicked.connect(self.btn_max_clicked)
         self.functionslayout.addWidget(self.btn_maximize)
         self.btn_maximize.setFixedSize(60, 35)
+        self.btn_maximize.setStyleSheet(
+        "QPushButton::hover"
+        "{"
+        "background-color: #0d0063;"
+        "border-bottom-width: 1px;"
+        "border-radius: 0px;"
+        "text-decoration: underline;"
+        "}")
         self.btn_maximize.setFlat(True)
         self.btn_maximize.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "icons/squarepng.png"))
         self.btn_maximize.setIconSize(QSize(14, 14))
+
 
         # Close Button - Top Right
         self.btn_close = QPushButton()
@@ -159,15 +188,43 @@ class KiwiWindow(QtWidgets.QWidget):
         self.btn_close.setFlat(True)
         self.btn_close.setIcon(QtGui.QIcon(scriptDir + os.path.sep + "icons/closepng.png"))
         self.btn_close.setIconSize(QSize(14, 14))
-
+        self.btn_close.setStyleSheet("QPushButton::hover"
+        "{"
+        "background-color: #0d0063;"
+        "border-bottom-width: 1px;"
+        "border-radius: 0px;"
+        "text-decoration: underline;"
+        "}")
 
         window = QtWidgets.QWidget()
         window.setGeometry(QtCore.QRect(300, 300, 640, 480))
         sizegrip = QtWidgets.QSizeGrip(window)
         self.mainlayout.addWidget(sizegrip, 2, 0, 1, 0, Qt.AlignRight | Qt.AlignBottom)
 
+
+
+    def webPageChange(self, pagex):
+        if pagex == 0:
+            self.webWebWiew.close()
+            self.webWebWiew.load(QUrl("https://www.instagram.com/"))
+            self.webWebWiew.show()
+
+            print(self.webWebWiew.page().runJavaScript("#loginForm > div > div:nth-child(1) > div > label > input"))
+
+
+
+        elif pagex == 1:
+            self.webWebWiew.close()
+            self.webWebWiew.load(QUrl("https://www.facebook.com/"))
+            self.webWebWiew.show()
+
+        else:
+            self.webWebWiew.close()
+            self.webWebWiew.load(QUrl("https://twitter.com/login"))
+            self.webWebWiew.show()
+
+
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        #self.title.setFixedWidth(self.width()-180)
         self.title.setFixedWidth(self.width())
 
     def mouseTitlePressEvent(self, event):  # +
@@ -214,6 +271,7 @@ class KiwiWindow(QtWidgets.QWidget):
                                           "border-radius: 0px;"
                                           "text-decoration: underline;"
                                           "}")
+        self.webPageChange(0)
 
     def btn_facebook_clicked(self):
         self.buttonFacebook.setStyleSheet("QPushButton::!hover"
@@ -249,6 +307,7 @@ class KiwiWindow(QtWidgets.QWidget):
                                            "border-radius: 0px;"
                                            "text-decoration: underline;"
                                            "}")
+        self.webPageChange(1)
 
     def btn_twitter_clicked(self):
         self.buttonTwitter.setStyleSheet("QPushButton::!hover"
@@ -284,12 +343,17 @@ class KiwiWindow(QtWidgets.QWidget):
                                           "border-radius: 0px;"
                                           "text-decoration: underline;"
                                           "}")
+        #self.webPageChange(2)
+        print(self.webWebWiew.page().runJavaScript("document.getElementsByClassName('_2hvTZ pexuQ zyHYP').value"))
 
     def btn_close_clicked(self):
         self.close()
 
     def btn_max_clicked(self):
-        self.showMaximized()
+        if self.isMaximized():
+            self.showNormal()
+        else:
+            self.showMaximized()
 
     def btn_min_clicked(self):
         self.showMinimized()
