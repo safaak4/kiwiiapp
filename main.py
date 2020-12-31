@@ -14,6 +14,7 @@ class KiwiWindow(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.init_ui()
+        #self.setFocusPolicy(Qt.StrongFocus)
 
         self.show()
 
@@ -35,6 +36,7 @@ class KiwiWindow(QtWidgets.QWidget):
         self.webWebWiew = QWebEngineView()
         self.leadlayout.addWidget(self.webWebWiew, 0, 0, 0, 1)
         self.webWebWiew.close()
+        self.webWebWiew.setFocusPolicy(Qt.StrongFocus)
 
         #Title Layout
         self.titlelayout = QGridLayout()
@@ -201,6 +203,13 @@ class KiwiWindow(QtWidgets.QWidget):
         sizegrip = QtWidgets.QSizeGrip(window)
         self.mainlayout.addWidget(sizegrip, 2, 0, 1, 0, Qt.AlignRight | Qt.AlignBottom)
 
+    def keyPressEvent(self, event):
+
+        if self.webWebWiew.url() == QUrl("https://www.instagram.com/"):
+            self.webWebWiew.page().runJavaScript(
+                "document.querySelector('#loginForm > div > div:nth-child(1) > div > label > input').value;", self.denemee)
+        else:
+            print("nolu")
 
 
     def webPageChange(self, pagex):
@@ -209,8 +218,8 @@ class KiwiWindow(QtWidgets.QWidget):
             self.webWebWiew.load(QUrl("https://www.instagram.com/"))
             self.webWebWiew.show()
 
-            print(self.webWebWiew.page().runJavaScript("#loginForm > div > div:nth-child(1) > div > label > input"))
-
+           # self.webWebWiew.page().runJavaScript(
+            #         "document.querySelector('#loginForm > div > div:nth-child(1) > div > label > input').value;", self.denemee)
 
 
         elif pagex == 1:
@@ -343,9 +352,7 @@ class KiwiWindow(QtWidgets.QWidget):
                                           "border-radius: 0px;"
                                           "text-decoration: underline;"
                                           "}")
-        #self.webPageChange(2)
-        self.webWebWiew.page().runJavaScript("document.querySelector('#loginForm > div > div:nth-child(1) > div > label > input[name=username]');", self.denemee)
-         #   "console.log('denemee')")
+        self.webPageChange(2)
 
     def denemee(self, value):
         print(str(value))
