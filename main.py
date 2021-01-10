@@ -9,6 +9,8 @@ from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QHBoxLayout, QVBoxLa
 from PyQt5.QtCore import QSize, QPoint, Qt, QUrl
 from  PyQt5.QtGui import *
 
+from loginpage import LoginPage
+
 
 class KiwiWindow(QtWidgets.QWidget):
     def __init__(self):
@@ -24,6 +26,18 @@ class KiwiWindow(QtWidgets.QWidget):
         self.myFont = QtGui.QFont("Uni Sans", 10)
         self.myFont.setItalic(True)
 
+        self.buttonsettings = """QPushButton::!hover
+                                                  {
+                                                  color: #34495e;
+                                                  }
+                                                  QPushButton::hover
+                                                  {
+                                                  color: white;
+                                                  border-bottom-width: 1px;
+                                                  border-radius: 0px;
+                                                  text-decoration: underline;
+                                                  }"""
+
         #Main Layout
         self.mainlayout = QGridLayout()
         self.setLayout(self.mainlayout)
@@ -34,61 +48,7 @@ class KiwiWindow(QtWidgets.QWidget):
         self.mainlayout.addLayout(self.leadlayout, 0, 0, 0, 0)
         self.leadlayout.layout().setContentsMargins(0, 130, 0, 0)
 
-        #Login Layout
-        self.loginlayout = QVBoxLayout()
-        self.leadlayout.addLayout(self.loginlayout,0,0,0,0, Qt.AlignTop)
-
-
-        self.usernameText = QLabel("Username")
-        self.loginlayout.addWidget(self.usernameText)
-        self.usernameText.setStyleSheet("""color: #34495e; """)
-        self.usernameText.setFont(QFont(self.myFont))
-        self.loginlayout.setSpacing(0)
-
-        self.usernameline = QLineEdit()
-        self.loginlayout.addWidget(self.usernameline)
-        #self.usernameline.setContentsMargins(0,100,0,0)
-        self.usernameline.setFixedSize(300,35)
-        self.usernameline.setStyleSheet("""
-        background-color: #16a085;
-        color: white;
-        border: none;
-        font: 19px;
-        border-radius: 10px;
-        """)
-        self.loginlayout.setSpacing(0)
-
-        self.passwordText = QLabel("Password")
-        self.loginlayout.addWidget(self.passwordText)
-        self.passwordText.setStyleSheet("""color: #34495e; """)
-        self.passwordText.setFont(QFont(self.myFont))
-        self.loginlayout.setSpacing(0)
-
-        self.passwordline = QLineEdit()
-        self.loginlayout.addWidget(self.passwordline)
-        # self.usernameline.setContentsMargins(0,100,0,0)
-        self.passwordline.setFixedSize(300, 35)
-        self.passwordline.setStyleSheet("""
-                background-color: #16a085;
-                color: white;
-                border: none;
-                font: 19px;
-                border-radius: 10px;
-                """)
-        self.passwordline.setEchoMode(QLineEdit.Password)
-        self.loginlayout.setSpacing(0)
-
-        self.chckbox = QCheckBox("Remember Me")
-        self.loginlayout.addWidget(self.chckbox)
-        #self.chckbox.setStyleSheet("""QCheckBox::indicator {
-        #border: 3px solid #5A5A5A;
-        #background: none;
-        #}""")
-
-        self.loginButton = QPushButton("Login")
-        self.loginButton.setFixedSize(300,35)
-        self.loginlayout.addWidget(self.loginButton)
-
+        LoginPage(self.leadlayout, self.buttonsettings)
 
         #Title Layout
         self.titlelayout = QGridLayout()
@@ -129,19 +89,6 @@ class KiwiWindow(QtWidgets.QWidget):
         self.title.mouseMoveEvent = self.mouseTitleMoveEvent
 
         #Top Navigation Bar
-
-        self.buttonsettings = """QPushButton::!hover
-                                          {
-                                          color: #34495e;
-                                          }
-                                          QPushButton::hover
-                                          {
-                                          color: white;
-                                          border-bottom-width: 1px;
-                                          border-radius: 0px;
-                                          text-decoration: underline;
-                                          }"""
-
         self.buttonInstagram = QPushButton("Instagram")
         self.buttonFacebook = QPushButton("Facebook")
         self.buttonTwitter = QPushButton("Twitter")
