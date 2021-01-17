@@ -1,16 +1,20 @@
 import os
 import sys
 
+import instabot
+from instabot import bot
+
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QCheckBox
 from PyQt5.QtCore import QSize, QPoint, Qt, QUrl
-from  PyQt5.QtGui import *
-from instapy import InstaPy
+from PyQt5.QtGui import *
 
 
-class LoginPage():
+class LoginPage(QtWidgets.QWidget):
 
     def __init__(self, leadlayout, buttonsettings):
+        super().__init__()
+
 
         self.myFont = QtGui.QFont("Uni Sans", 11)
         self.myFont.setItalic(False)
@@ -23,7 +27,7 @@ class LoginPage():
         # Login Layout
         self.loginlayout = QVBoxLayout()
         self.leadlayout.addLayout(self.loginlayout, 0, 0, 0, 0, Qt.AlignTop)
-        self.loginlayout.setContentsMargins(0,150,0,0)
+        self.loginlayout.setContentsMargins(0, 150, 0, 0)
         self.loginlayout.setSpacing(2)
 
         self.usernameText = QLabel("Username")
@@ -31,8 +35,7 @@ class LoginPage():
         self.usernameText.setStyleSheet("""color: #34495e; """)
         self.usernameText.setFont(QFont(self.myFontBold))
 
-
-        self.usernameline = QLineEdit()
+        LoginPage.usernameline = QLineEdit()
         self.loginlayout.addWidget(self.usernameline)
         # self.usernameline.setContentsMargins(0,100,0,0)
         self.usernameline.setFixedSize(300, 35)
@@ -49,7 +52,7 @@ class LoginPage():
         self.passwordText.setStyleSheet("""color: #34495e; """)
         self.passwordText.setFont(QFont(self.myFontBold))
 
-        self.passwordline = QLineEdit()
+        LoginPage.passwordline = QLineEdit()
         self.loginlayout.addWidget(self.passwordline)
         # self.usernameline.setContentsMargins(0,100,0,0)
         self.passwordline.setFixedSize(300, 35)
@@ -87,16 +90,17 @@ class LoginPage():
                                                   text-decoration: underline;
                                                   }""")
         self.loginButton.setFont(QFont(self.myFont))
-        self.loginButton.clicked.connect(self.btn_login_clicked)
+        self.loginButton.clicked.connect(LoginPage.btn_login_clicked)
 
     def btn_login_clicked(self):
-        print("bloga girdik")
-        try:
-            InstaPy(username=self.usernameline.text(),
-                    password=self.passwordline.text())
-            print("??")
-        except:
-            print("hata")
-        else:
-            print("devamke")
+        #LoginPage.usernametextt = str(LoginPage.usernameline.text())
+        bot = instabot.bot.Bot()
+        print(LoginPage.usernameline.text() + LoginPage.passwordline.text())
 
+        try:
+            bot.login(username=LoginPage.usernameline.text(), password=LoginPage.passwordline.text())
+            print("Login Trying")
+        except:
+            print("Username or Password is wrong!")
+        else:
+            print("Succesfully login")
