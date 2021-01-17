@@ -15,31 +15,32 @@ class LoginPage(QtWidgets.QWidget):
     def __init__(self, leadlayout, buttonsettings):
         super().__init__()
 
+        LoginPage.bot = instabot.bot.Bot()
 
-        self.myFont = QtGui.QFont("Uni Sans", 11)
-        self.myFont.setItalic(False)
-        self.myFontBold = QtGui.QFont("Uni Sans", 11)
-        self.myFontBold.setItalic(True)
-        self.myFontBold.setBold(True)
+        LoginPage.myFont = QtGui.QFont("Uni Sans", 11)
+        LoginPage.myFont.setItalic(False)
+        LoginPage.myFontBold = QtGui.QFont("Uni Sans", 11)
+        LoginPage.myFontBold.setItalic(True)
+        LoginPage.myFontBold.setBold(True)
 
-        self.buttonsettings = buttonsettings
-        self.leadlayout = leadlayout
+        LoginPage.buttonsettings = buttonsettings
+        LoginPage.leadlayout = leadlayout
         # Login Layout
-        self.loginlayout = QVBoxLayout()
-        self.leadlayout.addLayout(self.loginlayout, 0, 0, 0, 0, Qt.AlignTop)
-        self.loginlayout.setContentsMargins(0, 150, 0, 0)
-        self.loginlayout.setSpacing(2)
+        LoginPage.loginlayout = QVBoxLayout()
+        LoginPage.leadlayout.addLayout(self.loginlayout, 0, 0, 0, 0, Qt.AlignTop)
+        LoginPage.loginlayout.setContentsMargins(0, 150, 0, 0)
+        LoginPage.loginlayout.setSpacing(2)
 
-        self.usernameText = QLabel("Username")
-        self.loginlayout.addWidget(self.usernameText)
-        self.usernameText.setStyleSheet("""color: #34495e; """)
-        self.usernameText.setFont(QFont(self.myFontBold))
+        LoginPage.usernameText = QLabel("Username")
+        LoginPage.loginlayout.addWidget(self.usernameText)
+        LoginPage.usernameText.setStyleSheet("""color: #34495e; """)
+        LoginPage.usernameText.setFont(QFont(self.myFontBold))
 
         LoginPage.usernameline = QLineEdit()
-        self.loginlayout.addWidget(self.usernameline)
+        LoginPage.loginlayout.addWidget(self.usernameline)
         # self.usernameline.setContentsMargins(0,100,0,0)
-        self.usernameline.setFixedSize(300, 35)
-        self.usernameline.setStyleSheet("""
+        LoginPage.usernameline.setFixedSize(300, 35)
+        LoginPage.usernameline.setStyleSheet("""
                 background-color: #16a085;
                 color: white;
                 border: none;
@@ -47,35 +48,35 @@ class LoginPage(QtWidgets.QWidget):
                 border-radius: 10px;
                 """)
 
-        self.passwordText = QLabel("Password")
-        self.loginlayout.addWidget(self.passwordText)
-        self.passwordText.setStyleSheet("""color: #34495e; """)
-        self.passwordText.setFont(QFont(self.myFontBold))
+        LoginPage.passwordText = QLabel("Password")
+        LoginPage.loginlayout.addWidget(LoginPage.passwordText)
+        LoginPage.passwordText.setStyleSheet("""color: #34495e; """)
+        LoginPage.passwordText.setFont(QFont(LoginPage.myFontBold))
 
         LoginPage.passwordline = QLineEdit()
-        self.loginlayout.addWidget(self.passwordline)
+        LoginPage.loginlayout.addWidget(LoginPage.passwordline)
         # self.usernameline.setContentsMargins(0,100,0,0)
-        self.passwordline.setFixedSize(300, 35)
-        self.passwordline.setStyleSheet("""
+        LoginPage.passwordline.setFixedSize(300, 35)
+        LoginPage.passwordline.setStyleSheet("""
                         background-color: #16a085;
                         color: white;
                         border: none;
                         font: 19px;
                         border-radius: 10px;
                         """)
-        self.passwordline.setEchoMode(QLineEdit.Password)
+        LoginPage.passwordline.setEchoMode(QLineEdit.Password)
 
-        self.chckbox = QCheckBox("Remember Me")
-        self.loginlayout.addWidget(self.chckbox)
+        LoginPage.chckbox = QCheckBox("Remember Me")
+        LoginPage.loginlayout.addWidget(LoginPage.chckbox)
         # self.chckbox.setStyleSheet("""QCheckBox::indicator {
         # border: 3px solid #5A5A5A;
         # background: none;
         # }""")
 
-        self.loginButton = QPushButton("Login")
-        self.loginButton.setFixedSize(300, 35)
-        self.loginlayout.addWidget(self.loginButton)
-        self.loginButton.setStyleSheet("""QPushButton::!hover
+        LoginPage.loginButton = QPushButton("Login")
+        LoginPage.loginButton.setFixedSize(300, 35)
+        LoginPage.loginlayout.addWidget(LoginPage.loginButton)
+        LoginPage.loginButton.setStyleSheet("""QPushButton::!hover
                                                   {
                                                   color: #ecf0f1;
                                                   background-color: #34495e;
@@ -89,18 +90,34 @@ class LoginPage(QtWidgets.QWidget):
                                                   border-radius: 10px;
                                                   text-decoration: underline;
                                                   }""")
-        self.loginButton.setFont(QFont(self.myFont))
-        self.loginButton.clicked.connect(LoginPage.btn_login_clicked)
+        LoginPage.loginButton.setFont(QFont(LoginPage.myFont))
+        LoginPage.loginButton.clicked.connect(LoginPage.btn_login_clicked)
 
     def btn_login_clicked(self):
         #LoginPage.usernametextt = str(LoginPage.usernameline.text())
-        bot = instabot.bot.Bot()
-        print(LoginPage.usernameline.text() + LoginPage.passwordline.text())
 
         try:
-            bot.login(username=LoginPage.usernameline.text(), password=LoginPage.passwordline.text())
-            print("Login Trying")
+            LoginPage.lgn_widgets_close(self)
+            #print(LoginPage.usernameline.text() + LoginPage.passwordline.text())
         except:
-            print("Username or Password is wrong!")
+            print("hata 2")
         else:
-            print("Succesfully login")
+
+            try:
+                if LoginPage.usernameline.isHidden():
+                    LoginPage.bot.login(username=LoginPage.usernameline.text(), password=LoginPage.passwordline.text())
+
+                print("Login Trying")
+            except:
+                print("Username or Password is wrong!")
+            else:
+                print("Succesfully login")
+
+    def lgn_widgets_close(self):
+        LoginPage.usernameline.hide()
+        LoginPage.passwordline.hide()
+        LoginPage.usernameText.hide()
+        LoginPage.passwordText.hide()
+        LoginPage.chckbox.hide()
+        LoginPage.loginButton.hide()
+

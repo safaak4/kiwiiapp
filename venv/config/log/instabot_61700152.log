@@ -1,0 +1,14 @@
+2021-01-18 01:00:33,175 - instabot version: 0.117.0 (bot) - INFO - Instabot version: 0.117.0 Started
+2021-01-18 01:00:33,175 - instabot version: 0.117.0 (bot) - DEBUG - Bot imported from C:\Users\cumas\PycharmProjects\kiwiiapp\venv\lib\site-packages\instabot\bot\bot.py
+2021-01-18 01:00:33,175 - instabot version: 0.117.0 (api_login) - INFO - Not yet logged in starting: PRE-LOGIN FLOW!
+2021-01-18 01:00:33,455 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/get_prefill_candidates/ returned response: <Response [200]>
+2021-01-18 01:00:33,727 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: qe/sync/ returned response: <Response [200]>
+2021-01-18 01:00:34,008 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: launcher/sync/ returned response: <Response [200]>
+2021-01-18 01:00:34,279 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/contact_point_prefill/ returned response: <Response [200]>
+2021-01-18 01:00:37,206 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: accounts/login/ returned response: <Response [400]>
+2021-01-18 01:00:37,206 - instabot version: 0.117.0 (api) - DEBUG - Responsecode indicates error; response content: b'{"message": "The password you entered is incorrect. Please try again.", "invalid_credentials": true, "error_title": "Incorrect password for asd", "buttons": [{"title": "Try Again", "action": "dismiss"}], "status": "fail", "error_type": "bad_password"}'
+2021-01-18 01:00:37,206 - instabot version: 0.117.0 (api) - ERROR - Request returns 400 error!
+2021-01-18 01:00:37,206 - instabot version: 0.117.0 (api) - INFO - Instagram's error message: The password you entered is incorrect. Please try again.
+2021-01-18 01:00:37,206 - instabot version: 0.117.0 (api) - INFO - Error type: bad_password
+2021-01-18 01:00:37,206 - instabot version: 0.117.0 (api) - ERROR - Failed to login go to instagram and change your password
+2021-01-18 01:00:37,206 - instabot version: 0.117.0 (api) - INFO - Username or password is incorrect.
