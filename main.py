@@ -48,7 +48,6 @@ class KiwiWindow(QtWidgets.QWidget):
         self.mainlayout.addLayout(self.leadlayout, 0, 0, 0, 0)
         self.leadlayout.layout().setContentsMargins(0, 130, 0, 0)
 
-        LoginPage(self.leadlayout, self.buttonsettings)
 
         #Title Layout
         self.titlelayout = QGridLayout()
@@ -192,14 +191,16 @@ class KiwiWindow(QtWidgets.QWidget):
         sizegrip = QtWidgets.QSizeGrip(window)
         self.mainlayout.addWidget(sizegrip, 2, 0, 1, 0, Qt.AlignRight | Qt.AlignBottom)
 
+
     def webPageChange(self, pagex):
         if pagex == 0:
             print("Instagram")
-
         elif pagex == 1:
             print("Facebook")
         else:
             print("Twitter")
+
+        LoginPage(self.leadlayout, self.buttonsettings, pagex)
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         self.title.setFixedWidth(self.width())

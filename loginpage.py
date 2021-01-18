@@ -1,8 +1,9 @@
 import os
+import pickle
 import sys
 
 import instabot
-from instabot import bot
+
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QCheckBox
@@ -12,10 +13,12 @@ from PyQt5.QtGui import *
 
 class LoginPage(QtWidgets.QWidget):
 
-    def __init__(self, leadlayout, buttonsettings):
+    def __init__(self, leadlayout, buttonsettings, prm):
         super().__init__()
 
-        LoginPage.bot = instabot.bot.Bot()
+        if prm == 0:
+            from instabot import bot
+            LoginPage.bot = instabot.bot.Bot()
 
         LoginPage.myFont = QtGui.QFont("Uni Sans", 11)
         LoginPage.myFont.setItalic(False)
@@ -104,14 +107,23 @@ class LoginPage(QtWidgets.QWidget):
         else:
 
             try:
-                if LoginPage.usernameline.isHidden():
-                    LoginPage.bot.login(username=LoginPage.usernameline.text(), password=LoginPage.passwordline.text())
 
+                LoginPage.bot.login(username=LoginPage.usernameline.text(), password=LoginPage.passwordline.text())
                 print("Login Trying")
             except:
                 print("Username or Password is wrong!")
             else:
                 print("Succesfully login")
+
+                if LoginPage.chckbox.isChecked():
+                    instagraminfodic = {"u": LoginPage.usernameline.text(), "p": LoginPage.passwordline.text()}
+                    instagramfile = open("instagramdata.pkl", "wb")
+                    pickle.dump(instagraminfodic, instagramfile)
+                    instagramfile.close()
+                    #instagramfile = open("instagramdata.pkl", "rb")
+                    #output = pickle.load(instagramfile)
+                    #print(output)
+
 
     def lgn_widgets_close(self):
         LoginPage.usernameline.hide()
