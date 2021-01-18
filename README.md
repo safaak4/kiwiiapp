@@ -1,3 +1,3 @@
 # kiwiiapp
 
-Manage to all your social media pages and accounts professionally.
+Manage all your social media pages and accounts professionally.
